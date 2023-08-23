@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <!-- <script src="./index.js" defer></script> -->
+    <!-- <script src="./totalPhoneBill.js" defer></script> -->
+  </head>
+  <body x-data="{
+     longestWord: '',
+      shortestWord: '',
+       wordLengths: '' ,
+       sentence: '',
+       getLongestWords(){
+        fetch(`/longestWord/${this.sentence}`)
+        .then(response => response.text()).
+        then(data => this.longestWord = data)
+        .catch(e => console.log(e))
+       },
+       getshortestWord(){
+        fetch(`/shortestWord/${this.sentence}`)
+        .then(response => response.text()).
+        then(data => this.shortestWord= data)
+        .catch(e => console.log(e))
+       },
+       getwordLengths(){
+        fetch(`/wordLengths/${this.sentence}`)
+        .then(response => response.text()).
+        then(data => this.wordLengths = data)
+        .catch(e => console.log(e))
+       },
+       usage: '',
+       available: '',
+       usage1: '',
+       available1: '',
+       result: '',
+
+       checkAirtime() {
+        axios.get(`/api/enough?usage=${this.usage1}&available=${this.available1}`)
+        .then((response) => {
+            this.result = response.data.result;
+        })
+        .catch((error) => {
+            console.error(error);
+            this.result = 'Error';
+        });
+
+    },
+    clearForm() {
+        this.usage1 = '';
+        this.available1 = '';
+        this.result = '';
+    }
+    }">
+    <h1>Bootcamp APIs</h1>
+    <section>
+    <h2>Longest and Shortest Word Finder</h2>
+    <div >
+      <label for="sentence">Enter a sentence:</label>
+      <input x-model="sentence" type="text" id="sentence" name="sentence" required>
+    
+<div>
+  <button x-on:click="getLongestWords" x-show="true">Find largestWord</button>
+  <br>
+  The longestWord:  <span x-text="longestWord"></span>
+</div>
+<div>
+  <button x-on:click="getshortestWord" x-show="true">Find shortestWord</button>
+  <br>
+  The shortestWord:  <span x-text="shortestWord"></span>
+</div>
+<div>
+  <button x-on:click="getwordLengths" x-show="true">Find wordLengths</button>
+  <br>
+  Number of Character:   <span x-text="wordLengths"></span>
+</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Phone Bill Calculator</h2>
+    <p>Enter the number of calls and SMSs you made in a comma-separated list. For example, call, sms, call, sms.</p>
+    <input type="text" id="input" placeholder="Enter calls and SMSs here">
+    <button id="submit">Calculate</button>
+    <p id="output"></p>
+    <script>
+      // get the elements from the document
+      const input = document.getElementById("input");
+      const submit = document.getElementById("submit");
+      const output = document.getElementById("output");
+  
+      // add an event listener to the submit button
+      submit.addEventListener("click", () => {
+        // get the value from the input
+        const callsAndSms = input.value;
+        // encode the value
+        const encodedCallsAndSms = encodeURIComponent(callsAndSms);
+        // make a fetch request to the API endpoint
+        fetch(`/totalPhoneBill/${encodedCallsAndSms}`)
+          .then(response => response.text()) // convert the response to text
+          .then(data => {
+            // display the data in the output element
+            console.log(data);
+            output.textContent = `Your total phone bill is ${data}`;
+          })
+          .catch(error => {
+            // handle any errors
+            console.error(error);
+            output.textContent = "Something went wrong. Please try again.";
+          });
+      });
+    </script>
+  </section>
+
+  <section>
+<div>
+  <h2>Enough Airtime Widget</h2>
+  <div>
+      <label for="usage" class="form-label">Projected Usage:</label>
+      <input type="text" x-model="usage1" id="usage" class="form-control">
+  </div>
+  <br>
+  <div>
+      <label for="available" class="form-label">Available Airtime:</label>
+      <input type="number" x-model="available1" id="available" class="form-control">
+  </div>
+  <br>
+  <div>
+      <button x-on:click="checkAirtime" class="btn btn-primary">Check Airtime</button>
+  </div>
+  <br>
+  <div>
+      <button class="btn btn-secondary" x-on:click="clearForm">Clear</button>
+  </div>
+  <br>
+  <div x-show="result">
+      Result: <span x-text="result"></span>
+  </div>
+</div>
+</section>
+
+  </body>
+</html>
