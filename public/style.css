@@ -19,7 +19,7 @@
     border: 1px rgb(102, 100, 99) solid;
     color: rgb(68, 54, 43);
     padding: 0.5em;
-    margin: 2 px;
+    margin: 2px;
    }
    h1 {
     color: burlywood;
@@ -36,4 +36,7 @@
     padding: 1em;
     margin: 15px auto; 
     box-shadow: black;
+  }
+  p {
+    color: rgb(29, 26, 26);
   }

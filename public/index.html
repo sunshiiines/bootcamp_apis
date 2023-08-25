@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/alpinejs" defer></script>
-    <!-- <script src="./index.js" defer></script> -->
-    <!-- <script src="./totalPhoneBill.js" defer></script> -->
   </head>
   <body x-data="{
      longestWord: '',
@@ -59,32 +57,33 @@
     }">
     <h1>Bootcamp APIs</h1>
     <section>
-    <h2>Longest and Shortest Word Finder</h2>
+    <h2>The Word Game</h2>
     <div >
       <label for="sentence">Enter a sentence:</label>
-      <input x-model="sentence" type="text" id="sentence" name="sentence" required>
-    
+      <input x-model="sentence" type="text" id="sentence" name="sentence" placeholder="enter a sentence">
+    <br>
+    <br>
 <div>
   <button x-on:click="getLongestWords" x-show="true">Find largestWord</button>
   <br>
-  The longestWord:  <span x-text="longestWord"></span>
+  <p>Longest Word:</p>  <span x-text="longestWord"></span> <br><br>
 </div>
 <div>
   <button x-on:click="getshortestWord" x-show="true">Find shortestWord</button>
   <br>
-  The shortestWord:  <span x-text="shortestWord"></span>
+  <p>Shortest Word:</p>  <span x-text="shortestWord"></span> <br><br>
 </div>
 <div>
   <button x-on:click="getwordLengths" x-show="true">Find wordLengths</button>
   <br>
-  Number of Character:   <span x-text="wordLengths"></span>
+  <p>Number of Characters:</p>   <span x-text="wordLengths"></span><br><br>
 </div>
     </div>
   </section>
 
   <section>
     <h2>Phone Bill Calculator</h2>
-    <p>Enter the number of calls and SMSs you made in a comma-separated list. For example, call, sms, call, sms.</p>
+    <div>Enter the number of calls and SMSs you made in a comma-separated list.</div> <br><br>
     <input type="text" id="input" placeholder="Enter calls and SMSs here">
     <button id="submit">Calculate</button>
     <p id="output"></p>
@@ -106,7 +105,7 @@
           .then(data => {
             // display the data in the output element
             console.log(data);
-            output.textContent = `Your total phone bill is ${data}`;
+            output.textContent = `Your total bill is ${data}`;
           })
           .catch(error => {
             // handle any errors
@@ -119,15 +118,15 @@
 
   <section>
 <div>
-  <h2>Enough Airtime Widget</h2>
+  <h2>Enough Airtime Calculator</h2>
   <div>
       <label for="usage" class="form-label">Projected Usage:</label>
-      <input type="text" x-model="usage1" id="usage" class="form-control">
+      <input type="text" x-model="usage1" id="usage" class="form-control" placeholder="enter projected usage">
   </div>
   <br>
   <div>
       <label for="available" class="form-label">Available Airtime:</label>
-      <input type="number" x-model="available1" id="available" class="form-control">
+      <input type="number" x-model="available1" id="available" class="form-control" placeholder="enter available airtime">
   </div>
   <br>
   <div>
@@ -139,7 +138,7 @@
   </div>
   <br>
   <div x-show="result">
-      Result: <span x-text="result"></span>
+     <p> Result: <span x-text="result"></span></p>
   </div>
 </div>
 </section>
